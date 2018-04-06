@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text,TextInput, Keyboard, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Font } from 'expo';
 
 export default class App extends React.Component {
@@ -33,17 +33,30 @@ export default class App extends React.Component {
 
   render() {
     return this.state.fontLoaded ? (
-      <View style={styles.container}>
-      <View style={styles.titleWrapper}>
-        <Text style={[styles.title, styles.defaultFont]}> Welcome to PotLuk! </Text>
-      </View>
-        <TouchableOpacity
-          style={styles.lukyButton}
-          onPress={this.shuffleOptions}
-        >
-          <Text style={styles.lukyButtonText}>Feeling Luky</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableWithoutFeedback onPress = {
+        Keyboard.dismiss
+      }>
+        <View style={styles.container}>
+        <View style={styles.titleWrapper}>
+          <Text style={[styles.title, styles.defaultFont]}> Welcome to PotLuk! </Text>
+        </View>
+        <View  style={styles.textInputWrapper}>
+            <TextInput
+              style={[styles.textInput, styles.defaultFont]}
+              placeholder="Enter Zipcode to Search"
+              onChangeText={(text) => this.setState({ text })}
+              keyboardType="numeric"
+              maxLength="5"
+            />
+        </View>
+          <TouchableOpacity
+            style={styles.lukyButton}
+            onPress={this.shuffleOptions}
+          >
+            <Text style={styles.lukyButtonText}>Feeling Luky</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
     ): null;
   }
 
@@ -57,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   defaultFont:{
-    fontFamily: 'open-sans-bold',
+    fontFamily: 'open-sans-semi-bold',
   },
   titleWrapper:{
     marginTop: 50
@@ -65,6 +78,20 @@ const styles = StyleSheet.create({
   title:{
     fontSize: 30,
     fontWeight: "600"
+  },
+  textInputWrapper:{
+    marginHorizontal: 50,
+  },
+  textInput:{
+    height: 50,
+    minWidth: '100%',
+    width: '100%',
+    marginTop: 150,
+    borderWidth: 1,
+    borderColor: '#bdc3c7',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    textAlign: 'center'
   },
   lukyButton: {
     backgroundColor: '#176875',
